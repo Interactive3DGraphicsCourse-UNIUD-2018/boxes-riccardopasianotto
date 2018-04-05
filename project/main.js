@@ -192,6 +192,35 @@ var AirPlane = function() {
   this.mesh.add(centralSideWingTop);
   this.mesh.add(centralSideWingBottom);
 
+  // Central wings axes system
+  var wingVerticalAxesGeometry = new THREE.BoxGeometry(3,centralSideWingTop.position.y - centralSideWingBottom.position.y,3)
+  var wingVerticalAxesMaterial = new THREE.MeshPhongMaterial({
+     color: 0x0000ff
+   })
+
+  // Axes definition
+  var wingAxisDx = new THREE.Mesh(wingVerticalAxesGeometry, wingVerticalAxesMaterial)
+  var wingAxisSx = new THREE.Mesh(wingVerticalAxesGeometry, wingVerticalAxesMaterial)
+  // Remember to add shadow casting ecc..
+  centralSideWingBottom.add(wingAxisDx, wingAxisSx)
+  wingAxisDx.position.z = centralSideWingGeometry.parameters.depth / 3
+  wingAxisDx.position.y = wingVerticalAxesGeometry.parameters.height / 2
+  wingAxisSx.position.z = -centralSideWingGeometry.parameters.depth / 3
+  wingAxisSx.position.y = wingVerticalAxesGeometry.parameters.height / 2
+
+  // Sustaining axes
+  var wingSustainingAxisDx = wingAxisDx.clone()
+  var wingSustainingAxisSx = wingAxisSx.clone()
+  centralSideWingBottom.add(wingSustainingAxisDx, wingSustainingAxisSx)
+  wingSustainingAxisDx.position.z = centralSideWingGeometry.parameters.depth / 4.5
+  wingSustainingAxisDx.scale.set(1, 1.2, 1)
+  wingSustainingAxisDx.position.y += 5
+  wingSustainingAxisDx.rotateX(0.75)
+  wingSustainingAxisSx.position.z = -centralSideWingGeometry.parameters.depth / 4.5
+  wingSustainingAxisSx.scale.set(1, 1.2, 1)
+  wingSustainingAxisSx.position.y += 5
+  wingSustainingAxisSx.rotateX(-0.75)
+
   // Front Propeller
   var propellerGeometry = new THREE.BoxGeometry(12,12,12)
   var propellerMaterial = new THREE.MeshPhongMaterial({
