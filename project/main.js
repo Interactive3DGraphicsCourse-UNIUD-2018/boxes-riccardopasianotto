@@ -93,7 +93,7 @@ var AirPlane = function() {
 
   // Central area
   // This the central box of the plane, stretched on the x axis
-  var centralAreaGeometry = new THREE.BoxGeometry(80,45,45)
+  var centralAreaGeometry = new THREE.BoxGeometry(120,45,45)
   var centralAreaMaterial = new THREE.MeshPhongMaterial({
     color: 0xfff000
   })
