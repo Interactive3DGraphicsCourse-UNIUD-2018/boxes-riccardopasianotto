@@ -9,7 +9,8 @@ var Colors = {
   red: 0xff0505,
   green: 0x2eef1c,
   white: 0xffffff,
-  rose: 0xffaacf
+  rose: 0xffaacf,
+  sky: 0x1fa9e0
 }
 
 // This fucntion matches the original Start() function
@@ -34,14 +35,11 @@ function setupScene(){
     nearPlane,
     farPlane
   )
-  // Camera positioning
-  camera.position.set(0,2,80)
-  camera.lookAt( new THREE.Vector3(0,2,0))
   
   // Renderer setup
   renderer = new THREE.WebGLRenderer( {antialias: true} )
   renderer.setSize( WIDTH, HEIGHT )
-  renderer.setClearColor( 0xf0f0f0 )
+  renderer.setClearColor( Colors.sky )
   renderer.setPixelRatio( window.devicePixelRatio )
   renderer.gammaInput = true
   renderer.gammaOutput = true
@@ -71,7 +69,7 @@ function setupScene(){
   var ground = new THREE.Mesh( groundGeo, groundMat )
   ground.position.y = -0.5
   ground.rotation.x = -Math.PI/2
-  //scene.add( ground )
+  scene.add( ground )
   ground.receiveShadow = true
 
   // Stats panel to monitor frame rate
@@ -82,13 +80,18 @@ function setupScene(){
 
   // Orbit controls to move camera
   controls = new THREE.OrbitControls( camera )
+  // Camera positioning
+  camera.position.set(50,50,20)
+  camera.lookAt( new THREE.Vector3(0,500,0))
+  controls.update()
   controls.addEventListener( 'change', Render )
   
 }
 
 function Update() {
-  requestAnimationFrame(Update)
+  updatePlane()
   Render()
+  requestAnimationFrame(Update)
 }
 
 function Render(){
@@ -237,13 +240,13 @@ var AirPlane = function() {
   var propellerMaterial = new THREE.MeshPhongMaterial({
     color: Colors.black
   })
-  var propeller = new THREE.Mesh(propellerGeometry, propellerMaterial)
-  propeller.castShadow = true
-  propeller.receiveShadow = true
-  propeller.position.x =  centralAreaGeometry.parameters.width/2 +
+  this.propeller = new THREE.Mesh(propellerGeometry, propellerMaterial)
+  this.propeller.castShadow = true
+  this.propeller.receiveShadow = true
+  this.propeller.position.x =  centralAreaGeometry.parameters.width/2 +
                           engineGeometry.parameters.width +
                           propellerGeometry.parameters.width/2
-  this.mesh.add(propeller)
+  this.mesh.add(this.propeller)
 
   // Blades
   var bladeGeometry = new THREE.BoxGeometry(1, 100, 10)
@@ -258,7 +261,7 @@ var AirPlane = function() {
   verticalBlade.receiveShadow = true
   horizontalBlade.castShadow = true
   horizontalBlade.receiveShadow = true
-  propeller.add(verticalBlade, horizontalBlade)
+  this.propeller.add(verticalBlade, horizontalBlade)
 
   // Landing Gear
 
@@ -374,10 +377,16 @@ var AirPlane = function() {
 function createPlane(){ 
   // Create new AirPlane
   airplane = new AirPlane()
+  // Scale airplane
+  airplane.mesh.scale.set(.15,.15,.15);
   // Set its position
-  airplane.mesh.position.set(0,0,0)
+  airplane.mesh.position.set(0,10,0)
   // Take airplane object mesh and add it to the scene
   scene.add(airplane.mesh);
+}
+
+function updatePlane() {
+	airplane.propeller.rotation.x += 0.3;
 }
 
 function init (event){

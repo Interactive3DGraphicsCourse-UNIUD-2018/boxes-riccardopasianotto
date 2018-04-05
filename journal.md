@@ -23,3 +23,4 @@ Nex step is to setup the whole colors of the airplane and position it in the wor
 * Coloring done through a global variable to be more flexible.
 * I need to fix all the projected shadows.
 * Thinking of a random way to build clouds.
+* I've animated the propeller. `this.propeller` has to be set into `Airplane` object so it can be modified and accessed publicly from the object instance of `Airplane` inside the animation method.
