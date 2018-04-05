@@ -24,8 +24,8 @@ function setupScene(){
     farPlane
   )
   // Camera positioning
-  camera.position.set(2,2,2)
-  camera.lookAt( new THREE.Vector3(0,0,0))
+  camera.position.set(0,2,80)
+  camera.lookAt( new THREE.Vector3(0,2,0))
   
   // Renderer setup
   renderer = new THREE.WebGLRenderer( {antialias: true} )
@@ -60,7 +60,7 @@ function setupScene(){
   var ground = new THREE.Mesh( groundGeo, groundMat )
   ground.position.y = -0.5
   ground.rotation.x = -Math.PI/2
-  scene.add( ground )
+  //scene.add( ground )
   ground.receiveShadow = true
 
   // Stats panel to monitor frame rate
@@ -84,8 +84,52 @@ function Render(){
   renderer.render(scene, camera)
 }
 
+// Airplane Object
+var AirPlane = function() {
+  
+  // Use of Object3D to compose the airplane of multiple
+  // geometries and meshes to let manipulate it later as a whole
+  this.mesh = new THREE.Object3D();
+
+  // Central area
+  // This the central box of the plane, stretched on the x axis
+  var centralAreaGeometry = new THREE.BoxGeometry(60,45,45)
+  var centralAreaMaterial = new THREE.MeshPhongMaterial({
+    color: 0xff0000
+  })
+  var centralArea = new THREE.Mesh(centralAreaGeometry, centralAreaMaterial)
+  // Mesh has to cast and receive shadows from other surrounding meshes
+  centralArea.castShadow = true
+  centralArea.receiveShadow = true
+  this.mesh.add(centralArea)
+  
+  // Engine
+  // This is the front box where the hypotetical engine usually were on old planes
+  // indeed this box will represent this engine
+  var engineGeometry = new THREE.BoxGeometry(20,50,50)
+  var engineMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffff
+  })
+  var engine = new THREE.Mesh(engineGeometry, engineMaterial);
+  // Translate engine on the x axis to bring it in fornt of central area
+  engine.position.x = 40;
+  engine.castShadow = true;
+  engine.receiveShadow = true;
+  this.mesh.add(engine);
+  
+}
+function createPlane(){ 
+  // Create new AirPlane
+  airplane = new AirPlane()
+  // Set its position
+  airplane.mesh.position.set(0,0,0)
+  // Take airplane object mesh and add it to the scene
+  scene.add(airplane.mesh);
+}
+
 function init (event){
   setupScene()
+  createPlane()
   
   // Enter the animation loop
   Update()
