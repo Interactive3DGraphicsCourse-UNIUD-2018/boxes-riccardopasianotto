@@ -120,7 +120,7 @@ var AirPlane = function() {
   // Back of the plane
 
   // Back Area
-  var backAreaGeometry = new THREE.BoxGeometry(35,30,45)
+  var backAreaGeometry = new THREE.BoxGeometry(40,20,35)
   var backAreaMaterial = new THREE.MeshPhongMaterial({
     color: 0xff0000
   })
@@ -165,7 +165,7 @@ var AirPlane = function() {
   this.mesh.add(verticalBackFlap)
 
   // Central Side Wings
-  var centralSideWingGeometry = new THREE.BoxGeometry(40,5,200)
+  var centralSideWingGeometry = new THREE.BoxGeometry(40,5,220)
   var centralSideWingMaterial = new THREE.MeshPhongMaterial({
     color: 0x0000ff
   })
@@ -182,11 +182,11 @@ var AirPlane = function() {
   // Side Wings Positioning
   centralSideWingTop.position.set(
     centralAreaGeometry.parameters.width / 2 - centralSideWingGeometry.parameters.width / 2,
-    15,
+    45,
     0)
   centralSideWingBottom.position.set(
     centralAreaGeometry.parameters.width / 2 - centralSideWingGeometry.parameters.width / 2,
-    -3,
+    -centralAreaGeometry.parameters.height / 2 + centralSideWingGeometry.parameters.height / 2 + 0.5, // 0.5 to remove z-fighting
     0)
 
   this.mesh.add(centralSideWingTop);
