@@ -21,3 +21,5 @@ If for instance we write `propeller.rotateX(45)`, we will notice a rotation of t
 * Little changes implemented. I added a windshield and a simple rose box that represent a man in control of the airplane.
 Nex step is to setup the whole colors of the airplane and position it in the world.
 * Coloring done through a global variable to be more flexible.
+* I need to fix all the projected shadows.
+* Thinking of a random way to build clouds.
