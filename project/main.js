@@ -328,6 +328,36 @@ var AirPlane = function() {
   sustainingAxisSx.position.x = -18
   sustainingAxisSx.position.y = 18
 
+
+  // Simple windshield
+  var windshieldGeometry = new THREE.BoxGeometry(3,10,30)
+  var windshieldMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+    transparent:true, 
+    opacity:.5
+  })
+  var windshield = new THREE.Mesh(windshieldGeometry, windshieldMaterial)
+  windshield.position.set(
+    centralAreaGeometry.parameters.width/4,
+    centralAreaGeometry.parameters.height/2 + windshieldGeometry.parameters.height/2,
+    0)
+  this.mesh.add(windshield)
+
+  // Simple windshield
+  var manGeometry = new THREE.BoxGeometry(12,12,12)
+  var manMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffaacf
+  })
+
+  // The head of the man that is controlling the airplane
+  var man = new THREE.Mesh(manGeometry, manMaterial)
+  man.position.set(
+    centralAreaGeometry.parameters.width/4 - 15,
+    centralAreaGeometry.parameters.height/2 + manGeometry.parameters.height/2,
+    0)
+  this.mesh.add(man)
+
+
 }
 
 function createPlane(){ 

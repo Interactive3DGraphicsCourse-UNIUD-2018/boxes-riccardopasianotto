@@ -18,3 +18,5 @@ If for instance we write `propeller.rotateX(45)`, we will notice a rotation of t
 * Implemented the langing gear as a composition of axes, wheels and bullons.
 * Want to make changes to the central wings to be more similar to the Nieuport 11.
 * Implemented axes system for the central wings. Only an addition has to be made, a wind shield.
+* Little changes implemented. I added a windshield and a simple rose box that represent a man in control of the airplane.
+Nex step is to setup the whole colors of the airplane and position it in the world.
