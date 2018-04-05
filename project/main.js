@@ -93,9 +93,9 @@ var AirPlane = function() {
 
   // Central area
   // This the central box of the plane, stretched on the x axis
-  var centralAreaGeometry = new THREE.BoxGeometry(60,45,45)
+  var centralAreaGeometry = new THREE.BoxGeometry(80,45,45)
   var centralAreaMaterial = new THREE.MeshPhongMaterial({
-    color: 0xff0000
+    color: 0xfff000
   })
   var centralArea = new THREE.Mesh(centralAreaGeometry, centralAreaMaterial)
   // Mesh has to cast and receive shadows from other surrounding meshes
@@ -112,10 +112,41 @@ var AirPlane = function() {
   })
   var engine = new THREE.Mesh(engineGeometry, engineMaterial)
   // Translate engine on the x axis to bring it in fornt of central area
-  engine.position.x = 40
+  engine.position.x = centralAreaGeometry.parameters.width / 2 + engineGeometry.parameters.width / 2
   engine.castShadow = true
   engine.receiveShadow = true
   this.mesh.add(engine)
+
+  // Back of the plane
+
+  // Back Area
+  var backAreaGeometry = new THREE.BoxGeometry(35,30,45)
+  var backAreaMaterial = new THREE.MeshPhongMaterial({
+    color: 0xff0000
+  })
+  var backArea = new THREE.Mesh(backAreaGeometry, backAreaMaterial)
+  backArea.position.x = - centralAreaGeometry.parameters.width / 2 - backAreaGeometry.parameters.width / 2
+  // Half the height of the central area, minus half of the height of this box
+  backArea.position.y = centralAreaGeometry.parameters.height / 2 - backAreaGeometry.parameters.height / 2
+  backArea.castShadow = true
+  backArea.receiveShadow = true
+  this.mesh.add(backArea)
+
+  // Back Wing
+  var backWingGeometry = new THREE.BoxGeometry(35,5,135)
+  var backWingMaterial = new THREE.MeshPhongMaterial({
+    color: 0x00f000
+  })
+  var backWing = new THREE.Mesh(backWingGeometry, backWingMaterial)
+  // Back Wing positioning
+  backWing.position.set(
+    -centralAreaGeometry.parameters.width / 2 -backAreaGeometry.parameters.width,
+    centralAreaGeometry.parameters.height / 2 - 5,
+    0
+  )
+  backWing.castShadow = true
+  backWing.receiveShadow = true
+  this.mesh.add(backWing)
   
 }
 
