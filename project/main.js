@@ -192,6 +192,35 @@ var AirPlane = function() {
   this.mesh.add(centralSideWingTop);
   this.mesh.add(centralSideWingBottom);
   
+
+  // Front Propeller
+  var propellerGeometry = new THREE.BoxGeometry(12,12,12)
+  var propellerMaterial = new THREE.MeshPhongMaterial({
+    color: 0xfff000
+  })
+  var propeller = new THREE.Mesh(propellerGeometry, propellerMaterial)
+  propeller.castShadow = true
+  propeller.receiveShadow = true
+  propeller.position.x =  centralAreaGeometry.parameters.width/2 +
+                          engineGeometry.parameters.width +
+                          propellerGeometry.parameters.width/2
+  this.mesh.add(propeller)
+
+  // Blades
+  var bladeGeometry = new THREE.BoxGeometry(1, 100, 10)
+  var bladeMaterial = new THREE.MeshPhongMaterial({
+    color: 0xff0000
+  })
+  var verticalBlade = new THREE.Mesh(bladeGeometry, bladeMaterial)
+  var horizontalBlade = new THREE.Mesh(bladeGeometry, bladeMaterial)
+  // Rotation of the horizontalBlade
+  horizontalBlade.rotateX(Math.PI/2)
+  verticalBlade.castShadow = true
+  verticalBlade.receiveShadow = true
+  horizontalBlade.castShadow = true
+  horizontalBlade.receiveShadow = true
+  propeller.add(verticalBlade, horizontalBlade)
+
 }
 
 function createPlane(){ 
