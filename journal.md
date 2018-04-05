@@ -20,3 +20,4 @@ If for instance we write `propeller.rotateX(45)`, we will notice a rotation of t
 * Implemented axes system for the central wings. Only an addition has to be made, a wind shield.
 * Little changes implemented. I added a windshield and a simple rose box that represent a man in control of the airplane.
 Nex step is to setup the whole colors of the airplane and position it in the world.
+* Coloring done through a global variable to be more flexible.

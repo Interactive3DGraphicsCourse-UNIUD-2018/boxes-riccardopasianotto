@@ -1,5 +1,16 @@
 // Global variables
 var scene, camera, renderer, controls, stats
+var Colors = {
+  sand: 0x8e7433,
+  metal: 0xd1d1d1,
+  brown: 0xaf8960,
+  black: 0x2d2b29,
+  sandBrown: 0xc6ab8b,
+  red: 0xff0505,
+  green: 0x2eef1c,
+  white: 0xffffff,
+  rose: 0xffaacf
+}
 
 // This fucntion matches the original Start() function
 function setupScene(){
@@ -95,7 +106,7 @@ var AirPlane = function() {
   // This the central box of the plane, stretched on the x axis
   var centralAreaGeometry = new THREE.BoxGeometry(120,45,45)
   var centralAreaMaterial = new THREE.MeshPhongMaterial({
-    color: 0xfff000
+    color: Colors.sand
   })
   var centralArea = new THREE.Mesh(centralAreaGeometry, centralAreaMaterial)
   // Mesh has to cast and receive shadows from other surrounding meshes
@@ -108,7 +119,7 @@ var AirPlane = function() {
   // indeed this box will represent this engine
   var engineGeometry = new THREE.BoxGeometry(20,50,50)
   var engineMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffffff
+    color: Colors.metal
   })
   var engine = new THREE.Mesh(engineGeometry, engineMaterial)
   // Translate engine on the x axis to bring it in fornt of central area
@@ -122,7 +133,7 @@ var AirPlane = function() {
   // Back Area
   var backAreaGeometry = new THREE.BoxGeometry(40,20,35)
   var backAreaMaterial = new THREE.MeshPhongMaterial({
-    color: 0xff0000
+    color: Colors.white
   })
   var backArea = new THREE.Mesh(backAreaGeometry, backAreaMaterial)
   backArea.position.x = - centralAreaGeometry.parameters.width / 2 - backAreaGeometry.parameters.width / 2
@@ -135,7 +146,7 @@ var AirPlane = function() {
   // Back Wing
   var backWingGeometry = new THREE.BoxGeometry(35,5,135)
   var backWingMaterial = new THREE.MeshPhongMaterial({
-    color: 0x00f000
+    color: Colors.red
   })
   var backWing = new THREE.Mesh(backWingGeometry, backWingMaterial)
   // Back Wing positioning
@@ -151,7 +162,7 @@ var AirPlane = function() {
   // Vertical Back Flap
   var verticalBackFlapGeometry = new THREE.BoxGeometry(25,35,5)
   var verticalBackFlapMaterial = new THREE.MeshPhongMaterial({
-    color: 0x00f000
+    color: Colors.green
   })
   var verticalBackFlap = new THREE.Mesh(verticalBackFlapGeometry, verticalBackFlapMaterial)
   // Vertical Back Wing positioning
@@ -167,7 +178,7 @@ var AirPlane = function() {
   // Central Side Wings
   var centralSideWingGeometry = new THREE.BoxGeometry(40,5,220)
   var centralSideWingMaterial = new THREE.MeshPhongMaterial({
-    color: 0x0000ff
+    color: Colors.sand
   })
 
   // Two mesh with same geometry and material, in fact these two are the same
@@ -195,7 +206,7 @@ var AirPlane = function() {
   // Central wings axes system
   var wingVerticalAxesGeometry = new THREE.BoxGeometry(3,centralSideWingTop.position.y - centralSideWingBottom.position.y,3)
   var wingVerticalAxesMaterial = new THREE.MeshPhongMaterial({
-     color: 0x0000ff
+     color: Colors.metal
    })
 
   // Axes definition
@@ -224,7 +235,7 @@ var AirPlane = function() {
   // Front Propeller
   var propellerGeometry = new THREE.BoxGeometry(12,12,12)
   var propellerMaterial = new THREE.MeshPhongMaterial({
-    color: 0xfff000
+    color: Colors.black
   })
   var propeller = new THREE.Mesh(propellerGeometry, propellerMaterial)
   propeller.castShadow = true
@@ -237,7 +248,7 @@ var AirPlane = function() {
   // Blades
   var bladeGeometry = new THREE.BoxGeometry(1, 100, 10)
   var bladeMaterial = new THREE.MeshPhongMaterial({
-    color: 0xff0000
+    color: Colors.brown
   })
   var verticalBlade = new THREE.Mesh(bladeGeometry, bladeMaterial)
   var horizontalBlade = new THREE.Mesh(bladeGeometry, bladeMaterial)
@@ -255,7 +266,7 @@ var AirPlane = function() {
   // Bullon
   var bullonGeometry = new THREE.BoxGeometry(7, 7, 8)
   var bullonMaterial = new THREE.MeshPhongMaterial({
-    color: 0xff00ff
+    color: Colors.metal
   })
 
   // Dx Bullon
@@ -271,7 +282,7 @@ var AirPlane = function() {
   // Wheel
   var wheelGeometry = new THREE.BoxGeometry(20, 20, 5)
   var wheelMaterial = new THREE.MeshPhongMaterial({
-    color: 0xf0f0f0
+    color: Colors.black
   })
 
   // Dx Wheel
@@ -286,7 +297,7 @@ var AirPlane = function() {
   // Central Axis
   var centralAxisGeometry = new THREE.BoxGeometry(3, 3, 50)
   var centralAxisMaterial = new THREE.MeshPhongMaterial({
-    color: 0x00ffff
+    color: Colors.metal
   })
   var centralAxis = new THREE.Mesh(centralAxisGeometry, centralAxisMaterial)
   // Central axis position
@@ -297,7 +308,7 @@ var AirPlane = function() {
   // Vertical Axes
   var verticalAxisGeometry = new THREE.BoxGeometry(3, 40, 3)
   var verticalAxisMaterial = new THREE.MeshPhongMaterial({
-    color: 0x00ffff
+    color: Colors.metal
   })
   var verticalAxisDx = new THREE.Mesh(verticalAxisGeometry, verticalAxisMaterial)
   var verticalAxisSx = new THREE.Mesh(verticalAxisGeometry, verticalAxisMaterial)
@@ -332,7 +343,7 @@ var AirPlane = function() {
   // Simple windshield
   var windshieldGeometry = new THREE.BoxGeometry(3,10,30)
   var windshieldMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffffff,
+    color: Colors.white,
     transparent:true, 
     opacity:.5
   })
@@ -343,10 +354,10 @@ var AirPlane = function() {
     0)
   this.mesh.add(windshield)
 
-  // Simple windshield
+  // Simple man head
   var manGeometry = new THREE.BoxGeometry(12,12,12)
   var manMaterial = new THREE.MeshPhongMaterial({
-    color: 0xffaacf
+    color: Colors.rose
   })
 
   // The head of the man that is controlling the airplane
