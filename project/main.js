@@ -174,24 +174,23 @@ var AirPlane = function() {
   // but will be positioned differently
   var centralSideWingTop = new THREE.Mesh(centralSideWingGeometry, centralSideWingMaterial)
   var centralSideWingBottom = new THREE.Mesh(centralSideWingGeometry, centralSideWingMaterial)
-  centralSideWingTop.castShadow = true;
-  centralSideWingTop.receiveShadow = true;
-  centralSideWingBottom.castShadow = true;
-  centralSideWingBottom.receiveShadow = true;
+  centralSideWingTop.castShadow = true
+  centralSideWingTop.receiveShadow = true
+  centralSideWingBottom.castShadow = true
+  centralSideWingBottom.receiveShadow = true
 
   // Side Wings Positioning
   centralSideWingTop.position.set(
     centralAreaGeometry.parameters.width / 2 - centralSideWingGeometry.parameters.width / 2,
     15,
-    0);
+    0)
   centralSideWingBottom.position.set(
     centralAreaGeometry.parameters.width / 2 - centralSideWingGeometry.parameters.width / 2,
     -3,
-    0);
+    0)
 
   this.mesh.add(centralSideWingTop);
   this.mesh.add(centralSideWingBottom);
-  
 
   // Front Propeller
   var propellerGeometry = new THREE.BoxGeometry(12,12,12)
