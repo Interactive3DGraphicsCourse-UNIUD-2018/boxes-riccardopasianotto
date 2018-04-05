@@ -147,6 +147,23 @@ var AirPlane = function() {
   backWing.castShadow = true
   backWing.receiveShadow = true
   this.mesh.add(backWing)
+
+  // Vertical Back Flap
+  var verticalBackFlapGeometry = new THREE.BoxGeometry(25,35,5)
+  var verticalBackFlapMaterial = new THREE.MeshPhongMaterial({
+    color: 0x00f000
+  })
+  var verticalBackFlap = new THREE.Mesh(verticalBackFlapGeometry, verticalBackFlapMaterial)
+  // Vertical Back Wing positioning
+  verticalBackFlap.position.set(
+    -centralAreaGeometry.parameters.width / 2 - backAreaGeometry.parameters.width,
+    centralAreaGeometry.parameters.height / 2 + verticalBackFlapGeometry.parameters.height / 2 - 5,
+    0
+  )
+  verticalBackFlap.castShadow = true
+  verticalBackFlap.receiveShadow = true
+  this.mesh.add(verticalBackFlap)
+  
   
 }
 
