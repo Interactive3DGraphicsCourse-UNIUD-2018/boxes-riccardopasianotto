@@ -12,3 +12,6 @@ First of all I need to setup the overall environment and project files to be mor
 * Propeller done. Thinking about animation.
 * I will animate the propeller. So the way it is created, as an Object3D to which has been added also the blades, will allow me to rotate the propeller and transfer the rotation also to the blades themselves.
 If for instance we write `propeller.rotateX(45)`, we will notice a rotation of the propeller object respect to the x axis, and with him also the blades attached.
+* What about *Project Ancillotto* as code name? Sounds good ahah.
+* Looking at some reference images from the *Nieuport 11*.
+* Drawing sketches of the landing gear and thinking about composing boxes. There will be a bullon, a wheel, vertical axis and sustaining axis. Now to the implementation.
