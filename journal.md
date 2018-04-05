@@ -24,3 +24,10 @@ Nex step is to setup the whole colors of the airplane and position it in the wor
 * I need to fix all the projected shadows.
 * Thinking of a random way to build clouds.
 * I've animated the propeller. `this.propeller` has to be set into `Airplane` object so it can be modified and accessed publicly from the object instance of `Airplane` inside the animation method.
+* Important updates! The scene is ready!
+Things I've implemented:
+  - There is a new cloud object. This object is composed by a random number of boxes (`var nBox = 3 + Math.floor(Math.random()*10)`) which position is randomized around a central pivot.
+  - There is a new cloud group object. This object is a composition of a random number of clouds (`var nClouds = Math.random() * 50 + 3`) which are then distributed around a circonference with random range, but minimum 50, at a random angle.
+  - The cloud group is animated so the user can feel the movement of the clouds and imagine the airplane flying through them.
+Things I've still to do now is to create the heightmap and fix the shadows. Also, keep up with code comments.
+Maybe I'll separate the objects in different files, will see.

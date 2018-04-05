@@ -67,7 +67,7 @@ function setupScene(){
   var groundMat = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x050505 } )
   groundMat.color.setHSL( 0.095, 1, 0.75 )
   var ground = new THREE.Mesh( groundGeo, groundMat )
-  ground.position.y = -0.5
+  ground.position.y = -50
   ground.rotation.x = -Math.PI/2
   scene.add( ground )
   ground.receiveShadow = true
@@ -86,16 +86,6 @@ function setupScene(){
   controls.update()
   controls.addEventListener( 'change', Render )
   
-}
-
-function Update() {
-  updatePlane()
-  Render()
-  requestAnimationFrame(Update)
-}
-
-function Render(){
-  renderer.render(scene, camera)
 }
 
 // Airplane Object
@@ -374,6 +364,58 @@ var AirPlane = function() {
 
 }
 
+Cloud = function(){
+
+  this.mesh = new THREE.Object3D()
+
+  var cloudGeometry = new THREE.BoxGeometry(10,10,10)
+  var cloudMaterial = new THREE.MeshPhongMaterial({
+    color: Colors.white,
+    transparent: true,
+    opacity: 0.7
+  })
+
+  var cloud = new THREE.Mesh(cloudGeometry, cloudMaterial)
+
+  var nBox = 3 + Math.floor(Math.random()*10)
+
+  for(let i = 0; i < nBox; i++) {
+    var cloudBox = new THREE.Mesh(cloudGeometry, cloudMaterial)
+    cloud.add(cloudBox)
+    // Randomize cloudBox
+    cloudBox.position.set(
+      Math.random()*10 * (Math.floor(Math.random()*2) == 1 ? 1 : -1 ),
+      Math.random()*7 * (Math.floor(Math.random()*2) == 1 ? 1 : -1 ),
+      Math.random()*10 * (Math.floor(Math.random()*2) == 1 ? 1 : -1 )
+    )
+    cloudBox.rotateX(THREE.Math.degToRad(Math.random()*180))
+    var scalingFactor = Math.random()*.5 + .5
+    cloudBox.scale.set(scalingFactor, scalingFactor, scalingFactor)
+  }
+
+  this.mesh.add(cloud)
+
+}
+
+CloudGroup = function(){
+  this.mesh = new THREE.Object3D()
+
+  var nClouds = Math.random() * 50 + 3
+
+  for(let i = 0; i < nClouds; i++) {
+    var randomCloud = new Cloud()
+    this.mesh.add(randomCloud.mesh)
+
+    var angle = Math.random() * Math.PI * 2
+    randomCloud.mesh.position.set(
+      Math.cos(angle) * (Math.random()*150 + 50),
+      Math.random()*20 * (Math.floor(Math.random()*2) == 1 ? 1 : -1 ),
+      Math.sin(angle) * (Math.random()*150 + 50)
+    )
+  }
+
+}
+
 function createPlane(){ 
   // Create new AirPlane
   airplane = new AirPlane()
@@ -389,10 +431,28 @@ function updatePlane() {
 	airplane.propeller.rotation.x += 0.3;
 }
 
+function updateClouds() {
+  clouds.mesh.position.x -= 0.04
+}
+
+function Update() {
+  updatePlane()
+  updateClouds()
+  Render()
+  stats.update()
+  requestAnimationFrame(Update)
+}
+
+function Render(){
+  renderer.render(scene, camera)
+}
+
 function init (event){
   setupScene()
   createPlane()
-  
+  clouds = new CloudGroup()
+  clouds.mesh.position.set(0,20,0)
+  scene.add(clouds.mesh) 
   // Enter the animation loop
   Update()
 }
