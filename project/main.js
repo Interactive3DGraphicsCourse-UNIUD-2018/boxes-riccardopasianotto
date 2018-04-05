@@ -220,6 +220,85 @@ var AirPlane = function() {
   horizontalBlade.receiveShadow = true
   propeller.add(verticalBlade, horizontalBlade)
 
+  // Landing Gear
+
+  // I will use the bullon as starting point and compose a wheel from it
+  // Bullon
+  var bullonGeometry = new THREE.BoxGeometry(7, 7, 8)
+  var bullonMaterial = new THREE.MeshPhongMaterial({
+    color: 0xff00ff
+  })
+
+  // Dx Bullon
+  var bullonDx = new THREE.Mesh(bullonGeometry, bullonMaterial)
+  bullonDx.castShadow = true
+  bullonDx.receiveShadow = true
+
+  // Sx Bullon
+  var bullonSx = new THREE.Mesh(bullonGeometry, bullonMaterial)
+  bullonSx.castShadow = true
+  bullonSx.receiveShadow = true
+  
+  // Wheel
+  var wheelGeometry = new THREE.BoxGeometry(20, 20, 5)
+  var wheelMaterial = new THREE.MeshPhongMaterial({
+    color: 0xf0f0f0
+  })
+
+  // Dx Wheel
+  var wheelDx = new THREE.Mesh(wheelGeometry, wheelMaterial)
+  bullonDx.add(wheelDx)
+
+  // Sx Wheel
+  var wheelSx = new THREE.Mesh(wheelGeometry, wheelMaterial)
+  bullonSx.add(wheelSx)
+
+  // Axes area of the landing gear
+  // Central Axis
+  var centralAxisGeometry = new THREE.BoxGeometry(3, 3, 50)
+  var centralAxisMaterial = new THREE.MeshPhongMaterial({
+    color: 0x00ffff
+  })
+  var centralAxis = new THREE.Mesh(centralAxisGeometry, centralAxisMaterial)
+  // Central axis position
+  centralAxis.position.x = centralAreaGeometry.parameters.width / 2 - 3
+  centralAxis.position.y = -50
+  this.mesh.add(centralAxis)
+
+  // Vertical Axes
+  var verticalAxisGeometry = new THREE.BoxGeometry(3, 40, 3)
+  var verticalAxisMaterial = new THREE.MeshPhongMaterial({
+    color: 0x00ffff
+  })
+  var verticalAxisDx = new THREE.Mesh(verticalAxisGeometry, verticalAxisMaterial)
+  var verticalAxisSx = new THREE.Mesh(verticalAxisGeometry, verticalAxisMaterial)
+
+  // Composition
+  centralAxis.add(bullonDx, bullonSx)
+  bullonSx.position.z = -25
+  bullonDx.position.z = 25
+  centralAxis.add(verticalAxisDx, verticalAxisSx)
+  verticalAxisDx.position.y = 20
+  verticalAxisDx.position.z = 15
+  verticalAxisDx.rotateX(-0.25)
+  verticalAxisSx.position.y = 20
+  verticalAxisSx.position.z = -15
+  verticalAxisSx.rotateX(0.25)
+
+  // Axes cloned
+  var sustainingAxisDx = verticalAxisDx.clone()
+  var sustainingAxisSx = verticalAxisSx.clone()
+  centralAxis.add(sustainingAxisDx, sustainingAxisSx)
+  // Set sustaining axes position and dimensions
+  sustainingAxisDx.scale.set(0.80,1.3,0.80)
+  sustainingAxisDx.rotateZ(0.75)
+  sustainingAxisDx.position.x = -18
+  sustainingAxisDx.position.y = 18
+  sustainingAxisSx.scale.set(0.80,1.3,0.80)
+  sustainingAxisSx.rotateZ(0.75)
+  sustainingAxisSx.position.x = -18
+  sustainingAxisSx.position.y = 18
+
 }
 
 function createPlane(){ 

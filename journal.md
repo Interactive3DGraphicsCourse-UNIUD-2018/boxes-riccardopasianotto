@@ -15,3 +15,4 @@ If for instance we write `propeller.rotateX(45)`, we will notice a rotation of t
 * What about *Project Ancillotto* as code name? Sounds good ahah.
 * Looking at some reference images from the *Nieuport 11*.
 * Drawing sketches of the landing gear and thinking about composing boxes. There will be a bullon, a wheel, vertical axis and sustaining axis. Now to the implementation.
+* Implemented the langing gear as a composition of axes, wheels and bullons.
