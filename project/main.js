@@ -163,7 +163,34 @@ var AirPlane = function() {
   verticalBackFlap.castShadow = true
   verticalBackFlap.receiveShadow = true
   this.mesh.add(verticalBackFlap)
-  
+
+  // Central Side Wings
+  var centralSideWingGeometry = new THREE.BoxGeometry(40,5,200)
+  var centralSideWingMaterial = new THREE.MeshPhongMaterial({
+    color: 0x0000ff
+  })
+
+  // Two mesh with same geometry and material, in fact these two are the same
+  // but will be positioned differently
+  var centralSideWingTop = new THREE.Mesh(centralSideWingGeometry, centralSideWingMaterial)
+  var centralSideWingBottom = new THREE.Mesh(centralSideWingGeometry, centralSideWingMaterial)
+  centralSideWingTop.castShadow = true;
+  centralSideWingTop.receiveShadow = true;
+  centralSideWingBottom.castShadow = true;
+  centralSideWingBottom.receiveShadow = true;
+
+  // Side Wings Positioning
+  centralSideWingTop.position.set(
+    centralAreaGeometry.parameters.width / 2 - centralSideWingGeometry.parameters.width / 2,
+    15,
+    0);
+  centralSideWingBottom.position.set(
+    centralAreaGeometry.parameters.width / 2 - centralSideWingGeometry.parameters.width / 2,
+    -3,
+    0);
+
+  this.mesh.add(centralSideWingTop);
+  this.mesh.add(centralSideWingBottom);
   
 }
 
