@@ -64,14 +64,14 @@ function setupScene(){
   ground.receiveShadow = true
 
   // Stats panel to monitor frame rate
-  stats = new Stats();
-  stats.domElement.style.position = 'absolute';
-  stats.domElement.style.top = '0px';
-  document.body.appendChild( stats.domElement );
+  stats = new Stats()
+  stats.domElement.style.position = 'absolute'
+  stats.domElement.style.top = '0px'
+  document.body.appendChild( stats.domElement )
 
   // Orbit controls to move camera
-  controls = new THREE.OrbitControls( camera );
-  controls.addEventListener( 'change', Render );
+  controls = new THREE.OrbitControls( camera )
+  controls.addEventListener( 'change', Render )
   
 }
 
@@ -110,14 +110,15 @@ var AirPlane = function() {
   var engineMaterial = new THREE.MeshPhongMaterial({
     color: 0xffffff
   })
-  var engine = new THREE.Mesh(engineGeometry, engineMaterial);
+  var engine = new THREE.Mesh(engineGeometry, engineMaterial)
   // Translate engine on the x axis to bring it in fornt of central area
-  engine.position.x = 40;
-  engine.castShadow = true;
-  engine.receiveShadow = true;
-  this.mesh.add(engine);
+  engine.position.x = 40
+  engine.castShadow = true
+  engine.receiveShadow = true
+  this.mesh.add(engine)
   
 }
+
 function createPlane(){ 
   // Create new AirPlane
   airplane = new AirPlane()
