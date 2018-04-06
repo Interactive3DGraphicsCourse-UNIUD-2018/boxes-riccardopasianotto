@@ -31,3 +31,4 @@ Things I've implemented:
   - The cloud group is animated so the user can feel the movement of the clouds and imagine the airplane flying through them.
 Things I've still to do now is to create the heightmap and fix the shadows. Also, keep up with code comments.
 Maybe I'll separate the objects in different files, will see.
+* I've done a small iteration over the animation and a small refactoring of the code to encapsulate the instantiation of the cloud group into a function.

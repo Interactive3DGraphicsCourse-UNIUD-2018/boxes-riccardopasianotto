@@ -428,16 +428,25 @@ function createPlane(){
 }
 
 function updatePlane() {
-	airplane.propeller.rotation.x += 0.3;
+  airplane.propeller.rotation.x += 0.3;
+  airplane.mesh.rotateX(Math.random()*.0025 * (Math.floor(Math.random()*2) == 1 ? 1 : -1 ))
+  airplane.mesh.rotateZ(Math.random()*.0015 * (Math.floor(Math.random()*2) == 1 ? 1 : -1 ))
+  //airplane.mesh.position.x += 0.03
 }
 
 function updateClouds() {
   clouds.mesh.position.x -= 0.04
 }
 
+function createClouds() {
+  clouds = new CloudGroup()
+  clouds.mesh.position.set(30,20,0)
+  scene.add(clouds.mesh) 
+}
+
 function Update() {
-  updatePlane()
-  updateClouds()
+  //updatePlane()
+  //updateClouds()
   Render()
   stats.update()
   requestAnimationFrame(Update)
@@ -450,9 +459,7 @@ function Render(){
 function init (event){
   setupScene()
   createPlane()
-  clouds = new CloudGroup()
-  clouds.mesh.position.set(0,20,0)
-  scene.add(clouds.mesh) 
+  createClouds()
   // Enter the animation loop
   Update()
 }
