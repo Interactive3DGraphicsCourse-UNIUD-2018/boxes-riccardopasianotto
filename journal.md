@@ -32,3 +32,6 @@ Things I've implemented:
 Things I've still to do now is to create the heightmap and fix the shadows. Also, keep up with code comments.
 Maybe I'll separate the objects in different files, will see.
 * I've done a small iteration over the animation and a small refactoring of the code to encapsulate the instantiation of the cloud group into a function.
+* I'm working on the creation of the heightmap.
+* I created the heightmap. I'm not relly happy with the visual effect, I tried with images with higher resolution but drawing too many boxes impacted on the frame rate too hard. Hence I kept the original png and worked with it to generate the new ground.
+* Now I think the scene and all the goals are met, now ill setup the repository to clarify what is going on with the project and write the report.

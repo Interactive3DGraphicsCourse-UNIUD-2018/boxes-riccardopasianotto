@@ -62,16 +62,6 @@ function setupScene(){
   dirLight.shadow.mapSize.width = 1024
   dirLight.shadow.mapSize.height = 1024
 
-  // Ground
-  var groundGeo = new THREE.PlaneBufferGeometry( 10000, 10000 )
-  var groundMat = new THREE.MeshPhongMaterial( { color: 0xffffff, specular: 0x050505 } )
-  groundMat.color.setHSL( 0.095, 1, 0.75 )
-  var ground = new THREE.Mesh( groundGeo, groundMat )
-  ground.position.y = -50
-  ground.rotation.x = -Math.PI/2
-  scene.add( ground )
-  ground.receiveShadow = true
-
   // Stats panel to monitor frame rate
   stats = new Stats()
   stats.domElement.style.position = 'absolute'
@@ -82,7 +72,6 @@ function setupScene(){
   controls = new THREE.OrbitControls( camera )
   // Camera positioning
   camera.position.set(50,50,20)
-  camera.lookAt( new THREE.Vector3(0,500,0))
   controls.update()
   controls.addEventListener( 'change', Render )
   
@@ -103,8 +92,6 @@ var AirPlane = function() {
   })
   var centralArea = new THREE.Mesh(centralAreaGeometry, centralAreaMaterial)
   // Mesh has to cast and receive shadows from other surrounding meshes
-  centralArea.castShadow = true
-  centralArea.receiveShadow = true
   this.mesh.add(centralArea)
   
   // Engine
@@ -117,8 +104,6 @@ var AirPlane = function() {
   var engine = new THREE.Mesh(engineGeometry, engineMaterial)
   // Translate engine on the x axis to bring it in fornt of central area
   engine.position.x = centralAreaGeometry.parameters.width / 2 + engineGeometry.parameters.width / 2
-  engine.castShadow = true
-  engine.receiveShadow = true
   this.mesh.add(engine)
 
   // Back of the plane
@@ -132,8 +117,6 @@ var AirPlane = function() {
   backArea.position.x = - centralAreaGeometry.parameters.width / 2 - backAreaGeometry.parameters.width / 2
   // Half the height of the central area, minus half of the height of this box
   backArea.position.y = centralAreaGeometry.parameters.height / 2 - backAreaGeometry.parameters.height / 2
-  backArea.castShadow = true
-  backArea.receiveShadow = true
   this.mesh.add(backArea)
 
   // Back Wing
@@ -148,8 +131,6 @@ var AirPlane = function() {
     centralAreaGeometry.parameters.height / 2 - 5,
     0
   )
-  backWing.castShadow = true
-  backWing.receiveShadow = true
   this.mesh.add(backWing)
 
   // Vertical Back Flap
@@ -164,8 +145,6 @@ var AirPlane = function() {
     centralAreaGeometry.parameters.height / 2 + verticalBackFlapGeometry.parameters.height / 2 - 5,
     0
   )
-  verticalBackFlap.castShadow = true
-  verticalBackFlap.receiveShadow = true
   this.mesh.add(verticalBackFlap)
 
   // Central Side Wings
@@ -178,10 +157,6 @@ var AirPlane = function() {
   // but will be positioned differently
   var centralSideWingTop = new THREE.Mesh(centralSideWingGeometry, centralSideWingMaterial)
   var centralSideWingBottom = new THREE.Mesh(centralSideWingGeometry, centralSideWingMaterial)
-  centralSideWingTop.castShadow = true
-  centralSideWingTop.receiveShadow = true
-  centralSideWingBottom.castShadow = true
-  centralSideWingBottom.receiveShadow = true
 
   // Side Wings Positioning
   centralSideWingTop.position.set(
@@ -231,8 +206,6 @@ var AirPlane = function() {
     color: Colors.black
   })
   this.propeller = new THREE.Mesh(propellerGeometry, propellerMaterial)
-  this.propeller.castShadow = true
-  this.propeller.receiveShadow = true
   this.propeller.position.x =  centralAreaGeometry.parameters.width/2 +
                           engineGeometry.parameters.width +
                           propellerGeometry.parameters.width/2
@@ -247,10 +220,6 @@ var AirPlane = function() {
   var horizontalBlade = new THREE.Mesh(bladeGeometry, bladeMaterial)
   // Rotation of the horizontalBlade
   horizontalBlade.rotateX(Math.PI/2)
-  verticalBlade.castShadow = true
-  verticalBlade.receiveShadow = true
-  horizontalBlade.castShadow = true
-  horizontalBlade.receiveShadow = true
   this.propeller.add(verticalBlade, horizontalBlade)
 
   // Landing Gear
@@ -264,13 +233,9 @@ var AirPlane = function() {
 
   // Dx Bullon
   var bullonDx = new THREE.Mesh(bullonGeometry, bullonMaterial)
-  bullonDx.castShadow = true
-  bullonDx.receiveShadow = true
 
   // Sx Bullon
   var bullonSx = new THREE.Mesh(bullonGeometry, bullonMaterial)
-  bullonSx.castShadow = true
-  bullonSx.receiveShadow = true
   
   // Wheel
   var wheelGeometry = new THREE.BoxGeometry(20, 20, 5)
@@ -372,24 +337,28 @@ Cloud = function(){
   var cloudMaterial = new THREE.MeshPhongMaterial({
     color: Colors.white,
     transparent: true,
-    opacity: 0.7
+    opacity: 0.9
   })
 
   var cloud = new THREE.Mesh(cloudGeometry, cloudMaterial)
 
-  var nBox = 3 + Math.floor(Math.random()*10)
+  var nBox = 3 + Math.floor(Math.random()*10) // The cloud is composed by at least 3 small boxes
 
   for(let i = 0; i < nBox; i++) {
     var cloudBox = new THREE.Mesh(cloudGeometry, cloudMaterial)
     cloud.add(cloudBox)
     // Randomize cloudBox
+    // Position the small boxes around the central box
     cloudBox.position.set(
       Math.random()*10 * (Math.floor(Math.random()*2) == 1 ? 1 : -1 ),
       Math.random()*7 * (Math.floor(Math.random()*2) == 1 ? 1 : -1 ),
       Math.random()*10 * (Math.floor(Math.random()*2) == 1 ? 1 : -1 )
     )
+    // Rotate the box randomly around the three axes
     cloudBox.rotateX(THREE.Math.degToRad(Math.random()*180))
-    var scalingFactor = Math.random()*.5 + .5
+    cloudBox.rotateY(THREE.Math.degToRad(Math.random()*180))
+    cloudBox.rotateZ(THREE.Math.degToRad(Math.random()*180))
+    var scalingFactor = Math.random()*.5 + .5 // Scale randomly
     cloudBox.scale.set(scalingFactor, scalingFactor, scalingFactor)
   }
 
@@ -400,12 +369,15 @@ Cloud = function(){
 CloudGroup = function(){
   this.mesh = new THREE.Object3D()
 
-  var nClouds = Math.random() * 50 + 3
+  var nClouds = Math.random() * 50 + 3 // Number of clouds, at last 3
 
   for(let i = 0; i < nClouds; i++) {
     var randomCloud = new Cloud()
     this.mesh.add(randomCloud.mesh)
 
+    // This chunk of code generate a random angle
+    // Then place the box in the circonference with variable range, but at least of 50 to overcome overlapping with the plane
+    // and create an area around it
     var angle = Math.random() * Math.PI * 2
     randomCloud.mesh.position.set(
       Math.cos(angle) * (Math.random()*150 + 50),
@@ -415,6 +387,93 @@ CloudGroup = function(){
   }
 
 }
+
+// Heightmap 3d object
+Heightmap = function(){
+  this.mesh = new THREE.Object3D()
+
+  // First load data of the heightmap
+  img = new Image()
+  img.src = '../textures/heightmap2.png'
+  img.onload = (e) => {
+    var data = getHeightData(img)
+  
+    // Boxes drawing
+    var simpleBoxGeompetry = new THREE.BoxGeometry(1,1,1)
+    // Different materials for different levels of the ground
+    var blueMaterial = new THREE.MeshBasicMaterial({
+      color: Colors.sky
+    })
+    var brownMaterial = new THREE.MeshBasicMaterial({
+      color: Colors.brown
+    })
+    var grayMaterial = new THREE.MeshBasicMaterial({
+      color: Colors.metal
+    }) 
+    var greenMaterial = new THREE.MeshBasicMaterial({
+      color: Colors.green
+    }) 
+
+    var X = 0
+    var Z = 0
+    var box
+    for (let i = 0; i < data.length; i++) {
+      // Every 60 data inputs increment Z and reset X to 0
+      if (i % 60 == 0) {
+        Z += 1
+        X = 0
+      }
+      // Create the box with the right material depending on the height
+      if(data[i] < 50){
+        box = new THREE.Mesh(simpleBoxGeompetry, blueMaterial)
+      } else if (data[i] < 130) {
+        box = new THREE.Mesh(simpleBoxGeompetry, greenMaterial)
+      } else if (data[i] < 180) {
+        box = new THREE.Mesh(simpleBoxGeompetry, brownMaterial)
+      } else {
+        box = new THREE.Mesh(simpleBoxGeompetry, grayMaterial)
+      }
+
+      this.mesh.add(box)
+      box.position.set(X,1,Z)  // Set position of the box
+      box.scale.set(1, data[i] * .03, 1) // Scale Y about an amount related to the value in data[i]
+
+      X += 1 // Increment X position of the next box to draw
+    }
+  }
+
+}
+
+function getHeightData(img,scale) {
+  
+  if (scale == undefined) scale=1;
+
+     var canvas = document.createElement( 'canvas' );
+     canvas.width = img.width;
+     canvas.height = img.height;
+     var context = canvas.getContext( '2d' );
+
+     var size = img.width * img.height;
+   console.log(size);
+     var data = new Float32Array( size );
+
+     context.drawImage(img,0,0);
+
+     for ( var i = 0; i < size; i ++ ) {
+         data[i] = 0
+     }
+
+     var imgd = context.getImageData(0, 0, img.width, img.height);
+     var pix = imgd.data;
+
+     var j=0;
+     for (var i = 0; i<pix.length; i +=4) {
+         var all = pix[i]+pix[i+1]+pix[i+2];  // all is in range 0 - 255*3
+         data[j++] = scale*all/3;   
+     }
+  
+     return data;
+ }
 
 function createPlane(){ 
   // Create new AirPlane
@@ -431,7 +490,6 @@ function updatePlane() {
   airplane.propeller.rotation.x += 0.3;
   airplane.mesh.rotateX(Math.random()*.0025 * (Math.floor(Math.random()*2) == 1 ? 1 : -1 ))
   airplane.mesh.rotateZ(Math.random()*.0015 * (Math.floor(Math.random()*2) == 1 ? 1 : -1 ))
-  //airplane.mesh.position.x += 0.03
 }
 
 function updateClouds() {
@@ -444,9 +502,16 @@ function createClouds() {
   scene.add(clouds.mesh) 
 }
 
+function createHeightmap(){
+  heightmap = new Heightmap()
+  heightmap.mesh.position.set(-30*7,-30,-30*7)
+  heightmap.mesh.scale.set(7,1,7)
+  scene.add(heightmap.mesh)
+}
+
 function Update() {
-  //updatePlane()
-  //updateClouds()
+  updatePlane()
+  updateClouds()
   Render()
   stats.update()
   requestAnimationFrame(Update)
@@ -460,6 +525,7 @@ function init (event){
   setupScene()
   createPlane()
   createClouds()
+  createHeightmap()
   // Enter the animation loop
   Update()
 }
