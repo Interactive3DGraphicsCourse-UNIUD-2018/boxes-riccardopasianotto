@@ -12,6 +12,7 @@ Clouds are generated randomly in group (as an `Object3D`), which is composed by 
 - By size I mean that there is always a central box around which are created other boxes, in random number, that are positioned near the central box to compose a single cloud. These new small boxes are scaled and rotated among all the three axes.
 - The position of the cloud is dediced randomly inside an area that we can imagine a cylinder with an hole in the middle. The clouds get generated randomly inside the area of this cylinder, at a random angle, and height. The area removed from the imaginary cylinder was needed to overcome the possibility to instantiate a cloud overlapping the airplane in the centre of the scene.
 <img src="screenshots/clouds.png" alt="Generation of the clouds">
+
 *In the screenshot above we can't see the shift of the clouds in the Y axis but it's present. Anyway, it is possible to notice the different composition of each cloud both in term of size and position.*
 
 ## Files
