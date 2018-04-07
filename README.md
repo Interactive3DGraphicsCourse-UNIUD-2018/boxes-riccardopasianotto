@@ -29,6 +29,7 @@ In the end I met the goal defined in the `GUIDELINES.md`. There are at least 30 
 <img src="screenshots/airplane-front-close.png" alt="Generation of the clouds">
 <img src="screenshots/airplane-landing-gear.png" alt="Generation of the clouds">
 <img src="screenshots/scene-back.png" alt="Generation of the clouds">
+<img src="https://media.giphy.com/media/1wmxCOqzMAQAEbv55b/giphy.gif">
 
 # Process
 I started thinking about a simple scene to implement. Searched for some voxel graphic images online. Come up with the idea of an airplane and basically iterated over it. 
